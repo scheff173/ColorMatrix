@@ -61,7 +61,7 @@ void QColorMatrixStackView::setValues(
 {
   const int i = _qTabBar.currentIndex();
   const int iMat = i > _iTabNew ? i - 1 : i;
-  if (iMat >= 0 && iMat < _mats.size()) {
+  if (iMat >= 0 && iMat < (int)_mats.size()) {
     _qTabBar.setTabText(i, text);
     _qEditColMat.setValues(_mats[iMat] = values);
     _qEditName.setText(text);
@@ -139,7 +139,7 @@ void QColorMatrixStackView::onTabBarChanged(int i)
   }
   updateEnable();
   const int iMat = i > _iTabNew ? i - 1 : i;
-  if (i != _iTabNew && iMat >= 0 && iMat < _mats.size()) {
+  if (i != _iTabNew && iMat >= 0 && iMat < (int)_mats.size()) {
     _qEditName.setText(_qTabBar.tabText(i));
     _qEditColMat.setValues(_mats[iMat]);
   }
@@ -153,10 +153,6 @@ void QColorMatrixStackView::onTabBarClicked(int i)
     _iTabNew = i + 1;
     _qTabBar.setCurrentIndex(i);
   }
-#if 0
-  _qEditName.setText(_qTabBar.tabText(i));
-  _qEditColMat.setValues(_mats[i]);
-#endif // 0
 }
 
 void QColorMatrixStackView::onTabMoved(int iOld, int iNew)
@@ -183,7 +179,7 @@ void QColorMatrixStackView::onMatEditFinished()
   const int i = _qTabBar.currentIndex();
   assert(i != _iTabNew);
   const int iMat = i > _iTabNew ? i - 1 : i;
-  if (iMat >= 0 && iMat < _mats.size()) {
+  if (iMat >= 0 && iMat < (int)_mats.size()) {
     _mats[iMat] = _qEditColMat.values();
     _matProd = Identity;
     for (auto mat : _mats) _matProd *= mat;
@@ -196,7 +192,7 @@ void QColorMatrixStackView::onNameEditFinished()
   const int i = _qTabBar.currentIndex();
   assert(i != _iTabNew);
   const int iMat = i > _iTabNew ? i - 1 : i;
-  if (iMat >= 0 && i < _mats.size()) {
+  if (iMat >= 0 && i < (int)_mats.size()) {
     _qTabBar.setTabText(i + 1, _qEditName.text());
   }
 }
